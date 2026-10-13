@@ -13,7 +13,7 @@ from pathlib import Path
 import qrcode
 import qrcode.image.svg
 
-url = sys.argv[1] if len(sys.argv) > 1 else "https://scansione.groovesrl.com/"
+url = sys.argv[1] if len(sys.argv) > 1 else "https://chipper-puffpuff-1bfd9f.netlify.app/"
 out = Path(__file__).parent
 
 qr = qrcode.QRCode(

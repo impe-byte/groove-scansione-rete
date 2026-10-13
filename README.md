@@ -2,7 +2,8 @@
 
 Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la scansione di rete gratuita offerta da Groove SRL e raccoglie le richieste con un modulo. I dati arrivano via email (FormSubmit), senza login, senza server e senza build.
 
-- Indirizzo pubblico: **https://scansione.groovesrl.com/**
+- Indirizzo pubblico: **https://chipper-puffpuff-1bfd9f.netlify.app/** (Netlify)
+- Le richieste arrivano a: **e.marchesini@groovesrl.com**
 - QR da stampare: [`qr/qr_scansione.svg`](qr/qr_scansione.svg) (vettoriale, per la tipografia) o [`qr/qr_scansione.png`](qr/qr_scansione.png)
 
 ## Struttura
@@ -18,7 +19,7 @@ Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la
 
 ## 1. Email di destinazione
 
-In `public/index.html` sostituire `EMAIL_DESTINATARIO` (3 occorrenze) con l'indirizzo che deve ricevere le richieste.
+Configurata in `public/index.html` (costante `RECIPIENT` e link `mailto:`): `e.marchesini@groovesrl.com`.
 Dopo la messa online fare un invio di prova: FormSubmit manda una mail di attivazione, cliccare il link **una sola volta**.
 Facoltativo: dopo l'attivazione FormSubmit fornisce un alias da usare nella costante `RECIPIENT` al posto dell'email, così l'indirizzo non è visibile nel codice.
 
@@ -57,12 +58,13 @@ Il resto del dominio (sito principale, email) non viene toccato.
 
 ## QR code
 
-Il QR è statico e non scade: contiene solo `https://scansione.groovesrl.com/`. Finché esiste il record `scansione` nel DNS, i ticket stampati funzionano anche cambiando host: basta aggiornare il CNAME.
+Il QR è statico e non scade: contiene solo `https://chipper-puffpuff-1bfd9f.netlify.app/`. Funziona finché il sito Netlify esiste con questo nome: non eliminare né rinominare il sito su Netlify, altrimenti i ticket stampati smettono di funzionare.
+Per ticket indipendenti dall'host, collegare un sottodominio (es. `scansione.groovesrl.com`) e rigenerare il QR con quello.
 
 Per rigenerarlo, anche con un codice evento che precompila il campo "Codice ticket":
 
 ```
 pip install qrcode pillow
-python qr/genera_qr.py https://scansione.groovesrl.com/
-python qr/genera_qr.py "https://scansione.groovesrl.com/?src=FIERA-MILANO-2026"
+python qr/genera_qr.py https://chipper-puffpuff-1bfd9f.netlify.app/
+python qr/genera_qr.py "https://chipper-puffpuff-1bfd9f.netlify.app/?src=FIERA-MILANO-2026"
 ```
