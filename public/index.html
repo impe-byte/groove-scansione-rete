@@ -262,7 +262,16 @@
         body: JSON.stringify(data),
       });
       const json = await res.json().catch(() => ({}));
-      if (!res.ok || json.success === "false" || json.success === false) throw new Error(json.message || res.status);
+      if (!res.ok || json.success === "false" || json.success === false) {
+        // Al primo utilizzo FormSubmit risponde così finché non si clicca il link di attivazione ricevuto via email
+        if (/activation/i.test(json.message || "")) {
+          show("Modulo in attivazione: la richiesta non è stata ancora registrata. Riprova più tardi oppure scrivici a " + RECIPIENT + ".", false);
+          btn.disabled = false;
+          btn.textContent = "Invia richiesta";
+          return;
+        }
+        throw new Error(json.message || res.status);
+      }
       form.reset();
       show("Grazie! Abbiamo ricevuto la tua richiesta: un tecnico Groove ti contatterà a breve.", true);
       btn.textContent = "Richiesta inviata ✓";
