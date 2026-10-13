@@ -3,7 +3,7 @@
 Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la scansione di rete gratuita offerta da Groove SRL e raccoglie le richieste con un modulo. I dati arrivano via email (FormSubmit), senza login, senza server e senza build.
 
 - Indirizzo pubblico: **https://chipper-puffpuff-1bfd9f.netlify.app/** (Netlify)
-- Le richieste arrivano a: **e.marchesini@groovesrl.com**
+- Le richieste arrivano a: **commerciale@groovesrl.com**
 - QR da stampare: [`qr/qr_scansione.svg`](qr/qr_scansione.svg) (vettoriale, per la tipografia) o [`qr/qr_scansione.png`](qr/qr_scansione.png)
 
 ## Struttura
@@ -19,7 +19,7 @@ Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la
 
 ## 1. Email di destinazione
 
-Configurata in `public/index.html` (costante `RECIPIENT` e link `mailto:`): `e.marchesini@groovesrl.com`.
+Configurata in `public/index.html` (costante `RECIPIENT` e link `mailto:`): `commerciale@groovesrl.com`.
 Dopo la messa online fare un invio di prova: FormSubmit manda una mail di attivazione, cliccare il link **una sola volta**.
 Facoltativo: dopo l'attivazione FormSubmit fornisce un alias da usare nella costante `RECIPIENT` al posto dell'email, così l'indirizzo non è visibile nel codice.
 
