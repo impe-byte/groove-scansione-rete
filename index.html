@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scansione di rete in omaggio | Groove SRL</title>
+  <meta name="description" content="Richiedi la scansione di rete gratuita offerta da Groove SRL ai nuovi clienti.">
+  <meta name="robots" content="noindex">
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --text: #1b2232;
+      --muted: #5b6478;
+      --accent: #2952e3;
+      --accent-dark: #1d3db3;
+      --border: #d9dee9;
+      --ok: #1f8a4c;
+      --err: #c0392b;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f131c;
+        --card: #181e2b;
+        --text: #e8ecf4;
+        --muted: #9aa3b5;
+        --accent: #5b7cff;
+        --accent-dark: #4364f0;
+        --border: #2b3346;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    main { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
+    header { text-align: center; padding: 16px 0 8px; }
+    .brand { font-weight: 800; font-size: 1.6rem; letter-spacing: .02em; }
+    .brand span { color: var(--accent); }
+    .badge {
+      display: inline-block; margin-top: 8px; padding: 4px 12px;
+      border-radius: 999px; background: var(--accent); color: #fff;
+      font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em;
+    }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px 20px; margin-top: 18px;
+    }
+    h1 { font-size: 1.45rem; margin: 0 0 8px; }
+    h2 { font-size: 1.1rem; margin: 0 0 12px; }
+    p { margin: 0 0 12px; color: var(--muted); }
+    ul.points { padding-left: 0; list-style: none; margin: 8px 0 0; }
+    ul.points li { padding: 6px 0 6px 28px; position: relative; }
+    ul.points li::before {
+      content: "✓"; position: absolute; left: 4px; top: 6px;
+      color: var(--accent); font-weight: 700;
+    }
+    .cta {
+      display: block; width: 100%; margin-top: 16px; padding: 14px;
+      border: 0; border-radius: 10px; background: var(--accent); color: #fff;
+      font-size: 1rem; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none;
+    }
+    .cta:hover { background: var(--accent-dark); }
+    .cta:disabled { opacity: .6; cursor: wait; }
+    label { display: block; font-weight: 600; font-size: .92rem; margin: 14px 0 4px; }
+    label .opt { font-weight: 400; color: var(--muted); }
+    input, select, textarea {
+      width: 100%; padding: 11px 12px; font: inherit; color: var(--text);
+      background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    }
+    input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); border-color: transparent; }
+    textarea { min-height: 90px; resize: vertical; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+    @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
+    .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: .88rem; color: var(--muted); }
+    .check input { width: auto; margin-top: 3px; flex-shrink: 0; }
+    .hidden { display: none; }
+    .msg { margin-top: 14px; padding: 12px; border-radius: 8px; font-weight: 600; }
+    .msg.ok { background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); }
+    .msg.err { background: color-mix(in srgb, var(--err) 15%, transparent); color: var(--err); }
+    footer { text-align: center; font-size: .8rem; color: var(--muted); margin-top: 28px; }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="brand">Groove<span>SRL</span></div>
+    <div class="badge">Omaggio di benvenuto</div>
+  </header>
+
+  <!-- Benvenuto + spiegazione -->
+  <section class="card" id="welcome">
+    <h1>Benvenuto! La tua scansione di rete è gratis</h1>
+    <p>
+      Grazie per aver scelto Groove SRL. Come regalo di benvenuto ti offriamo una
+      <strong>scansione completa della tua rete aziendale o domestica</strong>, eseguita dai nostri tecnici.
+    </p>
+    <h2>Cosa controlliamo</h2>
+    <ul class="points">
+      <li>Mappatura dei dispositivi collegati (PC, stampanti, telecamere, IoT…)</li>
+      <li>Porte e servizi esposti e potenzialmente vulnerabili</li>
+      <li>Configurazione di router, firewall e Wi-Fi</li>
+      <li>Software e firmware obsoleti da aggiornare</li>
+      <li>Report finale con priorità e consigli pratici</li>
+    </ul>
+    <p style="margin-top:12px">
+      La scansione è <strong>non invasiva</strong>, non interrompe il tuo lavoro e viene eseguita
+      solo dopo un accordo diretto con te. Compila il modulo: ti ricontatteremo per fissare l'appuntamento.
+    </p>
+    <a class="cta" href="#richiesta">Richiedi la scansione gratuita</a>
+  </section>
+
+  <!-- Form -->
+  <section class="card" id="richiesta">
+    <h2>Richiedi la tua scansione</h2>
+    <form id="scanForm" novalidate>
+      <div class="row">
+        <div>
+          <label for="nome">Nome *</label>
+          <input id="nome" name="Nome" autocomplete="given-name" required>
+        </div>
+        <div>
+          <label for="cognome">Cognome *</label>
+          <input id="cognome" name="Cognome" autocomplete="family-name" required>
+        </div>
+      </div>
+
+      <label for="azienda">Azienda <span class="opt">(se applicabile)</span></label>
+      <input id="azienda" name="Azienda" autocomplete="organization">
+
+      <div class="row">
+        <div>
+          <label for="email">Email *</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div>
+          <label for="telefono">Telefono *</label>
+          <input id="telefono" name="Telefono" type="tel" autocomplete="tel" required>
+        </div>
+      </div>
+
+      <label for="citta">Città / indirizzo della sede da analizzare *</label>
+      <input id="citta" name="Sede" autocomplete="address-level2" required>
+
+      <div class="row">
+        <div>
+          <label for="tipo">Tipo di rete *</label>
+          <select id="tipo" name="Tipo rete" required>
+            <option value="">Seleziona…</option>
+            <option>Ufficio / azienda</option>
+            <option>Negozio / attività commerciale</option>
+            <option>Studio professionale</option>
+            <option>Abitazione privata</option>
+            <option>Altro</option>
+          </select>
+        </div>
+        <div>
+          <label for="dispositivi">Dispositivi stimati</label>
+          <select id="dispositivi" name="Dispositivi stimati">
+            <option>Non so</option>
+            <option>1 – 10</option>
+            <option>11 – 25</option>
+            <option>26 – 50</option>
+            <option>Oltre 50</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="disponibilita">Disponibilità preferita <span class="opt">(giorni / orari)</span></label>
+      <input id="disponibilita" name="Disponibilita">
+
+      <label for="note">Note o problemi riscontrati <span class="opt">(facoltativo)</span></label>
+      <textarea id="note" name="Note"></textarea>
+
+      <!-- Codice ticket / evento: precompilato da ?src=... nell'URL, modificabile -->
+      <label for="codice">Codice ticket <span class="opt">(se presente sul biglietto)</span></label>
+      <input id="codice" name="Codice ticket">
+
+      <!-- Anti-spam: campo nascosto che solo i bot compilano -->
+      <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off">
+
+      <label class="check">
+        <input type="checkbox" id="privacy" required>
+        <span>Ho letto l'<a href="#informativa">informativa privacy</a> e acconsento al trattamento dei
+        miei dati per essere ricontattato da Groove SRL in merito alla scansione di rete. *</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="marketing" name="Consenso marketing" value="Sì">
+        <span>Acconsento a ricevere comunicazioni commerciali da Groove SRL (facoltativo).</span>
+      </label>
+
+      <button class="cta" type="submit" id="submitBtn">Invia richiesta</button>
+      <div id="formMsg" class="msg hidden" role="status"></div>
+    </form>
+  </section>
+
+  <section class="card" id="informativa">
+    <h2>Informativa privacy (sintesi)</h2>
+    <p>
+      Titolare del trattamento: Groove SRL. I dati inseriti sono usati esclusivamente per
+      gestire la tua richiesta di scansione di rete e ricontattarti; non sono ceduti a terzi
+      e sono conservati per il tempo necessario. Puoi chiederne in qualsiasi momento accesso,
+      rettifica o cancellazione scrivendo a <a href="mailto:EMAIL_DESTINATARIO">EMAIL_DESTINATARIO</a>.
+    </p>
+  </section>
+
+  <footer>
+    © <span id="year"></span> Groove SRL · <a href="mailto:EMAIL_DESTINATARIO">EMAIL_DESTINATARIO</a>
+  </footer>
+</main>
+
+<script>
+  // ===== CONFIGURAZIONE =====
+  // Indirizzo che riceve le richieste. Al primo invio FormSubmit manda una mail di
+  // conferma a questo indirizzo: va cliccato il link UNA volta per attivare il modulo.
+  // Dopo l'attivazione FormSubmit fornisce un alias (es. "a1b2c3...") da mettere qui
+  // al posto dell'email, così l'indirizzo non è visibile nel codice della pagina.
+  const RECIPIENT = "EMAIL_DESTINATARIO";
+  const ENDPOINT = "https://formsubmit.co/ajax/" + RECIPIENT;
+  // ==========================
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Precompila il codice ticket/evento da ?src=... (es. ?src=FIERA-MILANO-2026)
+  const src = new URLSearchParams(location.search).get("src");
+  if (src) document.getElementById("codice").value = src.slice(0, 60);
+
+  const form = document.getElementById("scanForm");
+  const btn = document.getElementById("submitBtn");
+  const msg = document.getElementById("formMsg");
+
+  function show(text, ok) {
+    msg.textContent = text;
+    msg.className = "msg " + (ok ? "ok" : "err");
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    const data = Object.fromEntries(new FormData(form).entries());
+    if (data._honey) return; // bot
+    data._subject = "Nuova richiesta scansione di rete – " + data.Nome + " " + data.Cognome;
+    data._template = "table";
+    data._captcha = "false";
+    data["Consenso privacy"] = "Sì";
+    data["Inviato il"] = new Date().toLocaleString("it-IT");
+
+    btn.disabled = true;
+    btn.textContent = "Invio in corso…";
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || json.success === "false" || json.success === false) throw new Error(json.message || res.status);
+      form.reset();
+      show("Grazie! Abbiamo ricevuto la tua richiesta: un tecnico Groove ti contatterà a breve.", true);
+      btn.textContent = "Richiesta inviata ✓";
+    } catch (err) {
+      show("Invio non riuscito. Riprova tra poco oppure scrivici a " + RECIPIENT + ".", false);
+      btn.disabled = false;
+      btn.textContent = "Invia richiesta";
+    }
+  });
+</script>
+</body>
+</html>
