@@ -118,7 +118,11 @@
   <!-- Form -->
   <section class="card" id="richiesta">
     <h2>Richiedi la tua scansione</h2>
-    <form id="scanForm" novalidate>
+    <!-- Gestito da Netlify Forms: le richieste compaiono in Netlify → Forms e vengono inoltrate via email -->
+    <form id="scanForm" name="richiesta-scansione" method="POST" data-netlify="true" netlify-honeypot="_honey" novalidate>
+      <input type="hidden" name="form-name" value="richiesta-scansione">
+      <input type="hidden" name="subject" value="Nuova richiesta scansione di rete">
+      <input type="hidden" name="Inviato il">
       <div class="row">
         <div>
           <label for="nome">Nome *</label>
@@ -185,7 +189,7 @@
       <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off">
 
       <label class="check">
-        <input type="checkbox" id="privacy" required>
+        <input type="checkbox" id="privacy" name="Consenso privacy" value="Sì" required>
         <span>Ho letto l'<a href="#informativa">informativa privacy</a> e acconsento al trattamento dei
         miei dati per essere ricontattato da Groove SRL in merito alla scansione di rete. *</span>
       </label>
@@ -215,14 +219,9 @@
 </main>
 
 <script>
-  // ===== CONFIGURAZIONE =====
-  // Indirizzo che riceve le richieste. Al primo invio FormSubmit manda una mail di
-  // conferma a questo indirizzo: va cliccato il link UNA volta per attivare il modulo.
-  // Dopo l'attivazione FormSubmit fornisce un alias (es. "a1b2c3...") da mettere qui
-  // al posto dell'email, così l'indirizzo non è visibile nel codice della pagina.
+  // Indirizzo mostrato in caso di errore. L'email che RICEVE le richieste si imposta
+  // su Netlify: Site configuration → Notifications → Emails and webhooks → Form submission notifications.
   const RECIPIENT = "commerciale@groovesrl.com";
-  const ENDPOINT = "https://formsubmit.co/ajax/" + RECIPIENT;
-  // ==========================
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -245,33 +244,19 @@
       form.reportValidity();
       return;
     }
-    const data = Object.fromEntries(new FormData(form).entries());
-    if (data._honey) return; // bot
-    data._subject = "Nuova richiesta scansione di rete – " + data.Nome + " " + data.Cognome;
-    data._template = "table";
-    data._captcha = "false";
-    data["Consenso privacy"] = "Sì";
-    data["Inviato il"] = new Date().toLocaleString("it-IT");
+    form.elements["subject"].value = "Nuova richiesta scansione di rete – " +
+      form.elements["Nome"].value + " " + form.elements["Cognome"].value;
+    form.elements["Inviato il"].value = new Date().toLocaleString("it-IT");
 
     btn.disabled = true;
     btn.textContent = "Invio in corso…";
     try {
-      const res = await fetch(ENDPOINT, {
+      const res = await fetch("/", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(form)).toString(),
       });
-      const json = await res.json().catch(() => ({}));
-      if (!res.ok || json.success === "false" || json.success === false) {
-        // Al primo utilizzo FormSubmit risponde così finché non si clicca il link di attivazione ricevuto via email
-        if (/activation/i.test(json.message || "")) {
-          show("Modulo in attivazione: la richiesta non è stata ancora registrata. Riprova più tardi oppure scrivici a " + RECIPIENT + ".", false);
-          btn.disabled = false;
-          btn.textContent = "Invia richiesta";
-          return;
-        }
-        throw new Error(json.message || res.status);
-      }
+      if (!res.ok) throw new Error(res.status);
       form.reset();
       show("Grazie! Abbiamo ricevuto la tua richiesta: un tecnico Groove ti contatterà a breve.", true);
       btn.textContent = "Richiesta inviata ✓";
