@@ -1,0 +1,3 @@
+# Cloudflare Pages: sito statico, nessuna build. Gli header sono in public/_headers.
+name = "groove-scansione-rete"
+pages_build_output_dir = "public"
