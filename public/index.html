@@ -156,7 +156,7 @@
   <!-- Form -->
   <section class="card" id="richiesta">
     <h2>Richiedi la tua scansione</h2>
-    <!-- Inviato a netlify/functions/invia-richiesta.js, che spedisce l'email tramite la casella SMTP di Groove -->
+    <!-- Inviato tramite FormSubmit (formsubmit.co) all'indirizzo RECIPIENT nello script in fondo -->
     <form id="scanForm" novalidate>
       <div class="row">
         <div>
@@ -478,8 +478,10 @@
 </main>
 
 <script>
-  // Indirizzo mostrato in caso di errore. L'email che RICEVE le richieste è la variabile MAIL_TO su Netlify.
+  // Indirizzo che riceve le richieste via FormSubmit. Al primo invio FormSubmit manda a questo
+  // indirizzo una mail con il link "Activate Form": va cliccato UNA volta per attivare il modulo.
   const RECIPIENT = "commerciale@groovesrl.com";
+  const ENDPOINT = "https://formsubmit.co/ajax/" + RECIPIENT;
 
   // Il link all'informativa nel modulo apre la sezione privacy
   const privacy = document.getElementById("informativa");
@@ -503,17 +505,33 @@
       return;
     }
     const data = Object.fromEntries(new FormData(form).entries());
+    if (data._honey) return; // bot
+    delete data._honey;
     data["Inviato il"] = new Date().toLocaleString("it-IT", { timeZone: "Europe/Rome" });
+    data._subject = "Nuova richiesta scansione di rete – " + data.Azienda + " (" + data.Nome + " " + data.Cognome + ")";
+    data._replyto = data.email;
+    data._template = "table";
+    data._captcha = "false";
 
     btn.disabled = true;
     btn.textContent = "Invio in corso…";
     try {
-      const res = await fetch("/api/invia-richiesta", {
+      const res = await fetch(ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error(res.status);
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || String(json.success) !== "true") {
+        // Finché il link di attivazione non viene cliccato FormSubmit risponde "This form needs Activation"
+        if (/activation/i.test(json.message || "")) {
+          show("Modulo in attivazione: la richiesta non è stata ancora registrata. Riprova più tardi oppure scrivici a " + RECIPIENT + ".", false);
+          btn.disabled = false;
+          btn.textContent = "Invia richiesta";
+          return;
+        }
+        throw new Error(json.message || res.status);
+      }
       form.reset();
       show("Grazie! Abbiamo ricevuto la tua richiesta: un tecnico Groove ti contatterà a breve.", true);
       btn.textContent = "Richiesta inviata ✓";

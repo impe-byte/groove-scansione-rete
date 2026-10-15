@@ -1,6 +1,6 @@
 # Groove SRL – Scansione di rete in omaggio
 
-Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la scansione di rete gratuita offerta da Groove SRL e raccoglie le richieste con un modulo. Le richieste vengono inviate via email da una Netlify Function tramite la casella SMTP di Groove, senza login per l'utente.
+Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la scansione di rete gratuita offerta da Groove SRL e raccoglie le richieste con un modulo. Le richieste vengono inviate via email tramite **FormSubmit** (formsubmit.co), senza login, senza server e senza build.
 
 - Indirizzo pubblico: **https://chipper-puffpuff-1bfd9f.netlify.app/** (Netlify)
 - Le richieste arrivano a: **commerciale@groovesrl.com**
@@ -15,35 +15,22 @@ Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la
 | `public/_headers` | Header di sicurezza per Netlify e Cloudflare Pages |
 | `vercel.json` | Configurazione Vercel (cartella `public`, header di sicurezza) |
 | `netlify.toml` | Configurazione Netlify |
-| `netlify/functions/` | Funzione che invia le richieste via email |
-| `package.json` | Dipendenza della funzione (nodemailer), installata da Netlify |
 | `wrangler.toml` | Configurazione Cloudflare Pages |
 | `qr/` | Script e immagini del QR (non pubblicati) |
 
-## 1. Invio delle richieste via email (Netlify Function + SMTP)
+## 1. Invio delle richieste via email (FormSubmit)
 
-Il modulo invia i dati a `netlify/functions/invia-richiesta.js` (indirizzo `/api/invia-richiesta`), che spedisce l'email usando una casella di posta di Groove. Le Netlify Functions sono incluse nel piano gratuito.
-L'email parte dal dominio groovesrl.com, quindi non viene bloccata dal filtro antispam aziendale; il campo *Rispondi a* è l'email del cliente.
+L'indirizzo di destinazione è la costante `RECIPIENT` in `public/index.html` (`commerciale@groovesrl.com`).
 
-In Netlify → **Site configuration → Environment variables** aggiungere (poi Deploys → *Trigger deploy*):
-
-| Variabile | Valore |
-|---|---|
-| `SMTP_HOST` | server SMTP della casella (es. `smtp.office365.com` per Microsoft 365, `smtps.aruba.it` per Aruba) |
-| `SMTP_PORT` | `587` (Microsoft 365) oppure `465` (Aruba) |
-| `SMTP_USER` | indirizzo della casella usata per inviare (es. `commerciale@groovesrl.com`) |
-| `SMTP_PASS` | password della casella (o *app password*). Impostarla come **secret** |
-| `MAIL_TO` | `commerciale@groovesrl.com` |
-| `MAIL_FROM` | facoltativa, mittente se diverso da `SMTP_USER` (deve essere autorizzato sulla casella) |
-
-Con Microsoft 365 l'*SMTP AUTH* della casella va abilitato dall'amministratore (Microsoft 365 admin center → utente → Posta → *Gestisci app di posta elettronica* → *SMTP autenticato*).
-Gli errori di invio sono visibili in Netlify → **Logs → Functions → invia-richiesta**.
+Attivazione (una sola volta per indirizzo): al primo invio FormSubmit manda a `commerciale@groovesrl.com` una mail con oggetto simile a *"Action Required: Activate FormSubmit…"* e il pulsante **Activate Form**, da cliccare una volta.
+Il mittente è `noreply@formsubmit.co`: se non arriva, controllare spam/quarantena del filtro antispam aziendale e far consentire il mittente/dominio `formsubmit.co`.
+Finché il modulo non è attivo la pagina mostra "Modulo in attivazione".
 
 ## 2. Deploy
 
-Importare il repository GitHub, **nessun comando di build**, cartella di output `public` (Netlify installa da solo le dipendenze della funzione). Ogni push su `main` ripubblica automaticamente.
+Importare il repository GitHub, **nessun comando di build**, cartella di output `public`. Ogni push su `main` ripubblica automaticamente.
 
-> Il sito è in uso su **Netlify**, necessario per il modulo (Netlify Function). Su Cloudflare Pages o Vercel la pagina si apre ma il modulo non invia.
+> Il sito è in uso su **Netlify**. Il modulo usa FormSubmit, quindi funziona su qualsiasi host.
 
 ### Cloudflare Pages
 Gratuito anche per uso commerciale, banda illimitata.
