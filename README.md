@@ -1,6 +1,6 @@
 # Groove SRL – Scansione di rete in omaggio
 
-Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la scansione di rete gratuita offerta da Groove SRL e raccoglie le richieste con un modulo. Le richieste sono raccolte da **Netlify Forms** e inoltrate via email, senza login, senza server e senza build.
+Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la scansione di rete gratuita offerta da Groove SRL e raccoglie le richieste con un modulo. Le richieste vengono inviate via email da una Netlify Function tramite la casella SMTP di Groove, senza login per l'utente.
 
 - Indirizzo pubblico: **https://chipper-puffpuff-1bfd9f.netlify.app/** (Netlify)
 - Le richieste arrivano a: **commerciale@groovesrl.com**
@@ -15,24 +15,35 @@ Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la
 | `public/_headers` | Header di sicurezza per Netlify e Cloudflare Pages |
 | `vercel.json` | Configurazione Vercel (cartella `public`, header di sicurezza) |
 | `netlify.toml` | Configurazione Netlify |
+| `netlify/functions/` | Funzione che invia le richieste via email |
+| `package.json` | Dipendenza della funzione (nodemailer), installata da Netlify |
 | `wrangler.toml` | Configurazione Cloudflare Pages |
 | `qr/` | Script e immagini del QR (non pubblicati) |
 
-## 1. Ricezione delle richieste (Netlify Forms)
+## 1. Invio delle richieste via email (Netlify Function + SMTP)
 
-Il modulo usa Netlify Forms (piano gratuito: 100 invii al mese), quindi funziona **solo con il sito ospitato su Netlify**.
+Il modulo invia i dati a `netlify/functions/invia-richiesta.js` (indirizzo `/api/invia-richiesta`), che spedisce l'email usando una casella di posta di Groove. Le Netlify Functions sono incluse nel piano gratuito.
+L'email parte dal dominio groovesrl.com, quindi non viene bloccata dal filtro antispam aziendale; il campo *Rispondi a* è l'email del cliente.
 
-1. Netlify → sito → **Forms** → *Enable form detection*, poi rifare il deploy (Deploys → *Trigger deploy* → *Deploy site*).
-   Dopo il deploy in Forms compare il modulo **richiesta-scansione**: lì sono sempre consultabili ed esportabili tutte le richieste.
-2. Site configuration → **Notifications** → *Emails and webhooks* → *Form submission notifications* → *Add notification* → *Email notification*:
-   form `richiesta-scansione`, email `commerciale@groovesrl.com`.
-3. Fare un invio di prova. Le notifiche arrivano dal mittente `formresponses@netlify.com`: se il filtro antispam aziendale le blocca, aggiungerlo alla lista dei mittenti consentiti.
+In Netlify → **Site configuration → Environment variables** aggiungere (poi Deploys → *Trigger deploy*):
+
+| Variabile | Valore |
+|---|---|
+| `SMTP_HOST` | server SMTP della casella (es. `smtp.office365.com` per Microsoft 365, `smtps.aruba.it` per Aruba) |
+| `SMTP_PORT` | `587` (Microsoft 365) oppure `465` (Aruba) |
+| `SMTP_USER` | indirizzo della casella usata per inviare (es. `commerciale@groovesrl.com`) |
+| `SMTP_PASS` | password della casella (o *app password*). Impostarla come **secret** |
+| `MAIL_TO` | `commerciale@groovesrl.com` |
+| `MAIL_FROM` | facoltativa, mittente se diverso da `SMTP_USER` (deve essere autorizzato sulla casella) |
+
+Con Microsoft 365 l'*SMTP AUTH* della casella va abilitato dall'amministratore (Microsoft 365 admin center → utente → Posta → *Gestisci app di posta elettronica* → *SMTP autenticato*).
+Gli errori di invio sono visibili in Netlify → **Logs → Functions → invia-richiesta**.
 
 ## 2. Deploy
 
-Importare il repository GitHub, **nessun comando di build**, cartella di output `public`. Ogni push su `main` ripubblica automaticamente.
+Importare il repository GitHub, **nessun comando di build**, cartella di output `public` (Netlify installa da solo le dipendenze della funzione). Ogni push su `main` ripubblica automaticamente.
 
-> Il sito è in uso su **Netlify**, necessario per il modulo (Netlify Forms). Su Cloudflare Pages o Vercel la pagina si apre ma il modulo non invia: servirebbe un altro servizio per i form.
+> Il sito è in uso su **Netlify**, necessario per il modulo (Netlify Function). Su Cloudflare Pages o Vercel la pagina si apre ma il modulo non invia.
 
 ### Cloudflare Pages
 Gratuito anche per uso commerciale, banda illimitata.

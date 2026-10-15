@@ -1,3 +1,8 @@
-# Netlify: sito statico, nessuna build. Gli header sono in public/_headers.
+# Netlify: sito statico in public/ + una funzione che invia le richieste via email (SMTP).
+# Gli header di sicurezza sono in public/_headers.
 [build]
   publish = "public"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

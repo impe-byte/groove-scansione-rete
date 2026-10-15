@@ -156,11 +156,8 @@
   <!-- Form -->
   <section class="card" id="richiesta">
     <h2>Richiedi la tua scansione</h2>
-    <!-- Gestito da Netlify Forms: le richieste compaiono in Netlify → Forms e vengono inoltrate via email -->
-    <form id="scanForm" name="richiesta-scansione" method="POST" data-netlify="true" netlify-honeypot="_honey" novalidate>
-      <input type="hidden" name="form-name" value="richiesta-scansione">
-      <input type="hidden" name="subject" value="Nuova richiesta scansione di rete">
-      <input type="hidden" name="Inviato il">
+    <!-- Inviato a netlify/functions/invia-richiesta.js, che spedisce l'email tramite la casella SMTP di Groove -->
+    <form id="scanForm" novalidate>
       <div class="row">
         <div>
           <label for="nome">Nome *</label>
@@ -481,8 +478,7 @@
 </main>
 
 <script>
-  // Indirizzo mostrato in caso di errore. L'email che RICEVE le richieste si imposta
-  // su Netlify: Site configuration → Notifications → Emails and webhooks → Form submission notifications.
+  // Indirizzo mostrato in caso di errore. L'email che RICEVE le richieste è la variabile MAIL_TO su Netlify.
   const RECIPIENT = "commerciale@groovesrl.com";
 
   // Il link all'informativa nel modulo apre la sezione privacy
@@ -506,17 +502,16 @@
       form.reportValidity();
       return;
     }
-    form.elements["subject"].value = "Nuova richiesta scansione di rete – " +
-      form.elements["Azienda"].value + " (" + form.elements["Nome"].value + " " + form.elements["Cognome"].value + ")";
-    form.elements["Inviato il"].value = new Date().toLocaleString("it-IT");
+    const data = Object.fromEntries(new FormData(form).entries());
+    data["Inviato il"] = new Date().toLocaleString("it-IT", { timeZone: "Europe/Rome" });
 
     btn.disabled = true;
     btn.textContent = "Invio in corso…";
     try {
-      const res = await fetch("/", {
+      const res = await fetch("/api/invia-richiesta", {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(new FormData(form)).toString(),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
       if (!res.ok) throw new Error(res.status);
       form.reset();
