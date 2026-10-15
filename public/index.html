@@ -3,116 +3,154 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#15121d">
   <title>Scansione di rete in omaggio | Groove SRL</title>
-  <meta name="description" content="Richiedi la scansione di rete gratuita offerta da Groove SRL ai nuovi clienti.">
+  <meta name="description" content="Richiedi la scansione di rete gratuita offerta da Groove SRL.">
   <meta name="robots" content="noindex">
+  <link rel="preload" href="assets/montserrat-latin-wght.woff2" as="font" type="font/woff2" crossorigin>
   <style>
-    :root {
-      --bg: #f4f6fb;
-      --card: #ffffff;
-      --text: #1b2232;
-      --muted: #5b6478;
-      --accent: #2952e3;
-      --accent-dark: #1d3db3;
-      --border: #d9dee9;
-      --ok: #1f8a4c;
-      --err: #c0392b;
+    @font-face {
+      font-family: "Montserrat";
+      src: url("assets/montserrat-latin-wght.woff2") format("woff2");
+      font-weight: 100 900;
+      font-display: swap;
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0f131c;
-        --card: #181e2b;
-        --text: #e8ecf4;
-        --muted: #9aa3b5;
-        --accent: #5b7cff;
-        --accent-dark: #4364f0;
-        --border: #2b3346;
-      }
+    :root {
+      --bg: #15121d;
+      --card: #1f1b2a;
+      --card-2: #262135;
+      --text: #f3f1f7;
+      --muted: #b4adc4;
+      --pink: #e8439b;
+      --pink-dark: #c92f82;
+      --purple: #86578d;
+      --border: #3a3349;
+      --ok: #4cd18a;
+      --err: #ff6b6b;
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--bg); }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
+      font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
       color: var(--text);
-      line-height: 1.55;
+      line-height: 1.6;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(60rem 30rem at 0% 0%, rgba(232, 67, 155, .22), transparent 60%),
+        radial-gradient(50rem 30rem at 100% 25rem, rgba(110, 80, 200, .20), transparent 60%);
+      background-repeat: no-repeat;
+      min-height: 100vh;
     }
-    main { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
-    header { text-align: center; padding: 16px 0 8px; }
-    .brand { font-weight: 800; font-size: 1.6rem; letter-spacing: .02em; }
-    .brand span { color: var(--accent); }
+    main { max-width: 680px; margin: 0 auto; padding: 28px 16px 40px; }
+
+    header { text-align: center; padding: 12px 0 4px; }
+    header img { width: 220px; max-width: 70%; height: auto; display: block; margin: 0 auto; }
     .badge {
-      display: inline-block; margin-top: 8px; padding: 4px 12px;
-      border-radius: 999px; background: var(--accent); color: #fff;
-      font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em;
+      display: inline-block; margin-top: 20px; padding: 6px 16px;
+      border-radius: 999px; background: var(--pink); color: #fff;
+      font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
     }
+
     .card {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 22px 20px; margin-top: 18px;
+      border-radius: 16px; padding: 26px 22px; margin-top: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
     }
-    h1 { font-size: 1.45rem; margin: 0 0 8px; }
-    h2 { font-size: 1.1rem; margin: 0 0 12px; }
+    h1 { font-size: 1.6rem; line-height: 1.25; font-weight: 800; margin: 0 0 12px; }
+    h1 span { color: var(--pink); }
+    h2 {
+      font-size: 1.05rem; font-weight: 800; margin: 0 0 14px;
+      color: var(--pink); text-transform: uppercase; letter-spacing: .04em;
+    }
     p { margin: 0 0 12px; color: var(--muted); }
-    ul.points { padding-left: 0; list-style: none; margin: 8px 0 0; }
-    ul.points li { padding: 6px 0 6px 28px; position: relative; }
+    strong { color: var(--text); }
+    a { color: var(--pink); }
+
+    ul.points { padding-left: 0; list-style: none; margin: 4px 0 12px; }
+    ul.points li { padding: 7px 0 7px 30px; position: relative; }
     ul.points li::before {
-      content: "✓"; position: absolute; left: 4px; top: 6px;
-      color: var(--accent); font-weight: 700;
+      content: "→"; position: absolute; left: 4px; top: 7px;
+      color: var(--pink); font-weight: 800;
     }
+
     .cta {
-      display: block; width: 100%; margin-top: 16px; padding: 14px;
-      border: 0; border-radius: 10px; background: var(--accent); color: #fff;
-      font-size: 1rem; font-weight: 700; cursor: pointer; text-align: center; text-decoration: none;
+      display: block; width: 100%; margin-top: 18px; padding: 15px;
+      border: 0; border-radius: 12px; background: var(--pink); color: #fff;
+      font: inherit; font-size: 1rem; font-weight: 800; letter-spacing: .03em;
+      cursor: pointer; text-align: center; text-decoration: none; text-transform: uppercase;
     }
-    .cta:hover { background: var(--accent-dark); }
+    .cta:hover { background: var(--pink-dark); }
     .cta:disabled { opacity: .6; cursor: wait; }
-    label { display: block; font-weight: 600; font-size: .92rem; margin: 14px 0 4px; }
+
+    label { display: block; font-weight: 600; font-size: .9rem; margin: 16px 0 6px; }
     label .opt { font-weight: 400; color: var(--muted); }
     input, select, textarea {
-      width: 100%; padding: 11px 12px; font: inherit; color: var(--text);
-      background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+      width: 100%; padding: 12px 13px; font: inherit; font-size: 1rem; color: var(--text);
+      background: var(--card-2); border: 1px solid var(--border); border-radius: 10px;
     }
-    input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); border-color: transparent; }
-    textarea { min-height: 90px; resize: vertical; }
+    select option { background: var(--card-2); color: var(--text); }
+    input:focus, select:focus, textarea:focus { outline: 2px solid var(--pink); border-color: transparent; }
+    textarea { min-height: 100px; resize: vertical; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
-    @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
-    .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: .88rem; color: var(--muted); }
-    .check input { width: auto; margin-top: 3px; flex-shrink: 0; }
+    @media (max-width: 520px) { .row { grid-template-columns: 1fr; } }
+    .check { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; font-size: .87rem; color: var(--muted); }
+    .check input { width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; accent-color: var(--pink); }
     .hidden { display: none; }
-    .msg { margin-top: 14px; padding: 12px; border-radius: 8px; font-weight: 600; }
-    .msg.ok { background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); }
-    .msg.err { background: color-mix(in srgb, var(--err) 15%, transparent); color: var(--err); }
-    footer { text-align: center; font-size: .8rem; color: var(--muted); margin-top: 28px; }
+    .msg { margin-top: 14px; padding: 12px 14px; border-radius: 10px; font-weight: 600; }
+    .msg.ok { background: rgba(76, 209, 138, .12); color: var(--ok); }
+    .msg.err { background: rgba(255, 107, 107, .12); color: var(--err); }
+
+    /* Informativa privacy */
+    details.privacy summary {
+      cursor: pointer; list-style: none; font-weight: 800; color: var(--pink);
+      text-transform: uppercase; letter-spacing: .04em; font-size: 1.05rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    }
+    details.privacy summary::-webkit-details-marker { display: none; }
+    details.privacy summary::after { content: "+"; font-size: 1.4rem; line-height: 1; }
+    details.privacy[open] summary::after { content: "–"; }
+    .policy { margin-top: 18px; font-size: .86rem; }
+    .policy h3 { font-size: .95rem; margin: 22px 0 8px; color: var(--text); }
+    .policy h4 { font-size: .88rem; margin: 16px 0 6px; color: var(--text); }
+    .policy p, .policy li { color: var(--muted); }
+    .policy ul { padding-left: 20px; margin: 0 0 12px; }
+    .policy li { margin-bottom: 6px; }
+    .policy address { font-style: normal; color: var(--muted); margin-bottom: 12px; }
+
+    footer { text-align: center; font-size: .78rem; color: var(--muted); margin-top: 32px; line-height: 1.8; }
     footer a { color: var(--muted); }
+    footer nav a { margin: 0 8px; }
   </style>
 </head>
 <body>
 <main>
   <header>
-    <div class="brand">Groove<span>SRL</span></div>
+    <img src="assets/groove-logo.png" width="431" height="109" alt="Groove – Feel the bit">
     <div class="badge">Omaggio di benvenuto</div>
   </header>
 
   <!-- Benvenuto + spiegazione -->
   <section class="card" id="welcome">
-    <h1>Benvenuto! La tua scansione di rete è gratis</h1>
+    <h1>La tua <span>scansione di rete</span> è in omaggio</h1>
     <p>
-      Grazie per aver scelto Groove SRL. Come regalo di benvenuto ti offriamo una
-      <strong>scansione completa della tua rete aziendale o domestica</strong>, eseguita dai nostri tecnici.
+      Grazie per aver scelto Groove. Come regalo di benvenuto ti offriamo una
+      <strong>scansione completa della tua rete aziendale</strong>, eseguita dai nostri tecnici.
     </p>
     <h2>Cosa controlliamo</h2>
     <ul class="points">
-      <li>Mappatura dei dispositivi collegati (PC, stampanti, telecamere, IoT…)</li>
+      <li>Mappatura dei dispositivi collegati (PC, server, stampanti, telecamere, IoT…)</li>
       <li>Porte e servizi esposti e potenzialmente vulnerabili</li>
       <li>Configurazione di router, firewall e Wi-Fi</li>
       <li>Software e firmware obsoleti da aggiornare</li>
       <li>Report finale con priorità e consigli pratici</li>
     </ul>
-    <p style="margin-top:12px">
+    <p>
       La scansione è <strong>non invasiva</strong>, non interrompe il tuo lavoro e viene eseguita
       solo dopo un accordo diretto con te. Compila il modulo: ti ricontatteremo per fissare l'appuntamento.
     </p>
-    <a class="cta" href="#richiesta">Richiedi la scansione gratuita</a>
+    <a class="cta" href="#richiesta">Richiedi la scansione</a>
   </section>
 
   <!-- Form -->
@@ -134,8 +172,8 @@
         </div>
       </div>
 
-      <label for="azienda">Azienda <span class="opt">(se applicabile)</span></label>
-      <input id="azienda" name="Azienda" autocomplete="organization">
+      <label for="azienda">Azienda *</label>
+      <input id="azienda" name="Azienda" autocomplete="organization" required>
 
       <div class="row">
         <div>
@@ -159,7 +197,6 @@
             <option>Ufficio / azienda</option>
             <option>Negozio / attività commerciale</option>
             <option>Studio professionale</option>
-            <option>Abitazione privata</option>
             <option>Altro</option>
           </select>
         </div>
@@ -178,24 +215,20 @@
       <label for="disponibilita">Disponibilità preferita <span class="opt">(giorni / orari)</span></label>
       <input id="disponibilita" name="Disponibilita">
 
-      <label for="note">Note o problemi riscontrati <span class="opt">(facoltativo)</span></label>
+      <label for="note">Note <span class="opt">(facoltativo)</span></label>
       <textarea id="note" name="Note"></textarea>
-
-      <!-- Codice ticket / evento: precompilato da ?src=... nell'URL, modificabile -->
-      <label for="codice">Codice ticket <span class="opt">(se presente sul biglietto)</span></label>
-      <input id="codice" name="Codice ticket">
 
       <!-- Anti-spam: campo nascosto che solo i bot compilano -->
       <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off">
 
       <label class="check">
-        <input type="checkbox" id="privacy" name="Consenso privacy" value="Sì" required>
-        <span>Ho letto l'<a href="#informativa">informativa privacy</a> e acconsento al trattamento dei
-        miei dati per essere ricontattato da Groove SRL in merito alla scansione di rete. *</span>
+        <input type="checkbox" id="privacy" name="Presa visione privacy" value="Sì" required>
+        <span>Ho letto l'<a href="#informativa" data-open-privacy>informativa sul trattamento dei dati personali</a>
+        e chiedo di essere ricontattato da Groove S.r.l. in merito alla scansione di rete. *</span>
       </label>
       <label class="check">
         <input type="checkbox" id="marketing" name="Consenso marketing" value="Sì">
-        <span>Acconsento a ricevere comunicazioni commerciali da Groove SRL (facoltativo).</span>
+        <span>Acconsento a ricevere materiale pubblicitario e newsletter da Groove S.r.l. (facoltativo).</span>
       </label>
 
       <button class="cta" type="submit" id="submitBtn">Invia richiesta</button>
@@ -203,18 +236,247 @@
     </form>
   </section>
 
-  <section class="card" id="informativa">
-    <h2>Informativa privacy (sintesi)</h2>
-    <p>
-      Titolare del trattamento: Groove SRL. I dati inseriti sono usati esclusivamente per
-      gestire la tua richiesta di scansione di rete e ricontattarti; non sono ceduti a terzi
-      e sono conservati per il tempo necessario. Puoi chiederne in qualsiasi momento accesso,
-      rettifica o cancellazione scrivendo a <a href="mailto:commerciale@groovesrl.com">commerciale@groovesrl.com</a>.
-    </p>
+  <!-- Privacy Policy Groove S.r.l. -->
+  <section class="card">
+    <details class="privacy" id="informativa">
+      <summary>Privacy Policy</summary>
+      <div class="policy">
+        <p>
+          Informativa sul trattamento di dati personali ai sensi del Regolamento (UE) 2016/679 del Parlamento
+          europeo e del Consiglio del 27 aprile 2016 (GDPR). Questo documento è in vigore dal 07/08/2025.
+        </p>
+
+        <h3>Premessa</h3>
+        <p>
+          La presente informativa tiene conto di quanto indicato dal GDPR e dal Codice della Privacy (D. Lgs 30 giugno
+          2003 n. 196). Il documento è stato redatto anche in base alle Linee Guida del Garante Privacy (soprattutto le
+          Linee Guida di contrasto allo spam emesse dal Garante Privacy il 4 luglio 2013). Questo documento può essere
+          anche visualizzato in una nuova pagina,
+          <a href="https://law.andev.it/privacy_policy/8cd829fa-4185-4b6b-b5d8-8e88151c89e4" target="_blank" rel="noopener">clicca qui</a>.
+        </p>
+
+        <h3>Titolare del Trattamento</h3>
+        <address>
+          Groove S.r.l.<br>
+          Via Giordano Bruno, 118<br>
+          47521 Cesena (FC) IT<br>
+          P.iva IT04578020408<br>
+          Indirizzo email del Titolare: <a href="mailto:info@groovesrl.com">info@groovesrl.com</a><br>
+          Recapito telefonico: <a href="tel:+390547179500">0547 179 500</a><br>
+          Sito web al quale si riferisce la presente dichiarazione di privacy policy:
+          <a href="https://groovesrl.com" target="_blank" rel="noopener">https://groovesrl.com</a>
+        </address>
+        <p>
+          Il Titolare del Trattamento non ha nominato un DPO (Data Protection Officer). Pertanto, Lei può inviare
+          qualsiasi richiesta di informazioni direttamente al Titolare del Trattamento.
+        </p>
+
+        <h3>Dati Personali trattati per le seguenti finalità e utilizzando i seguenti servizi</h3>
+        <p>Il presente documento descrive come il Titolare del Trattamento tratta i Suoi dati personali conferiti sul Sito.</p>
+        <p>
+          Di seguito vengono descritti i principali trattamenti dei Suoi dati personali. Viene in particolare spiegata
+          la base giuridica del trattamento, se il conferimento è obbligatorio e le conseguenze del mancato conferimento
+          di dati personali. Per descrivere al meglio i Suoi diritti, qualora necessario, abbiamo specificato se e quando
+          un determinato trattamento di dati personali non viene effettuato.
+        </p>
+
+        <h4>Rispondere alle Sue richieste</h4>
+        <p>
+          I Suoi dati verranno trattati per rispondere alle Sue richieste di informazioni. Il conferimento è facoltativo,
+          ma il Suo rifiuto comporterà l'impossibilità per il Titolare del Trattamento di rispondere alle Sue domande.
+          La base giuridica del trattamento è il legittimo interesse del Titolare del Trattamento a dare seguito alle
+          richieste dell'utente. Questo legittimo interesse è equivalente all'interesse dell'utente a ricevere risposta
+          alle comunicazioni inviate al Titolare del Trattamento.
+        </p>
+
+        <h4>Marketing generico &amp; Pubblicità</h4>
+        <p>
+          Previo Suo consenso, il Titolare del Trattamento potrà trattare i dati personali da Lei conferiti al fine di
+          inviarLe materiale pubblicitario e/o newsletter relativo a prodotti propri o di terzi. La base giuridica di
+          questo trattamento è il Suo consenso. Il conferimento dei dati personali per questa finalità è meramente
+          facoltativo. Il mancato assenso al trattamento dei dati per finalità di marketing comporterà l'impossibilità
+          per Lei di ricevere materiale pubblicitario relativo a prodotti/servizi del Titolare del Trattamento e/o di
+          terzi nonché l'impossibilità per il Titolare del Trattamento di svolgere indagini di mercato, anche dirette a
+          valutare il grado di soddisfazione degli utenti, nonché di inviarLe newsletter. L'invio di queste
+          comunicazioni avverrà alla e-mail da Lei conferita sul Sito.
+        </p>
+
+        <h4>Registrazione sul Sito web</h4>
+        <p>
+          Il Sito non offre la possibilità di registrazione. Pertanto, il Titolare del Trattamento non tratta i Suoi
+          dati personali per questa finalità.
+        </p>
+
+        <h4>Acquisti sul Sito web</h4>
+        <p>
+          Sul Sito non è possibile effettuare acquisti. Pertanto, i Suoi dati personali non saranno trattati per questa
+          finalità. Il Titolare del Trattamento non tratta i dati dell'utente per inviare email di "remainder" di
+          acquisto di prodotti e/o servizi del Titolare stesso.
+        </p>
+
+        <h4>Cessione dei dati a terzi</h4>
+        <p>Il Titolare del Trattamento non cede a terzi i Suoi dati personali.</p>
+
+        <h4>Profilazione</h4>
+        <p>
+          Il Titolare del Trattamento non effettua "profilazione" con i Suoi dati personali. Pertanto, non Le invierà
+          materiale pubblicitario e/o newsletter relativi a prodotti propri o di terzi di Suo specifico interesse.
+        </p>
+
+        <h4>Geolocalizzazione</h4>
+        <p>Il Sito non implementa strumenti di geolocalizzazione dell'indirizzo IP dell'utente.</p>
+
+        <h4>Comunicazione dei dati personali</h4>
+        <p>
+          Nell'ambito della propria ordinaria attività, il Titolare del Trattamento può comunicare i Suoi dati personali
+          a determinate categorie di soggetti. All'articolo 2 Lei può trovare l'elenco dei soggetti ai quali il Titolare
+          del Trattamento comunica i Suoi dati personali. Per agevolare la tutela dei Suoi diritti, l'articolo 2 può
+          specificare in alcuni casi quando i Suoi dati non vengono comunicati a terzi.
+        </p>
+        <p>
+          La "comunicazione" a terzi del dato personale è diversa dalla "cessione" (disciplinata al punto che precede).
+          Infatti, nella comunicazione il terzo al quale è trasmesso il dato può usarlo solo per le specifiche finalità
+          descritte nel rapporto con il Titolare del Trattamento. Nella cessione, invece, il terzo diventa Titolare del
+          Trattamento autonomo del dato personale. Inoltre, per cedere i Suoi dati personali a terzi è sempre richiesto
+          il Suo consenso.
+        </p>
+        <p>
+          Fermo quanto precede, resta inteso che il Titolare del Trattamento potrà comunque utilizzare i Suoi dati
+          personali per dare corretto adempimento agli obblighi previsti dalle leggi in vigore.
+        </p>
+
+        <h3>Informativa privacy specifica</h3>
+
+        <h4>Art. 1 Modalità di trattamento</h4>
+        <ul>
+          <li>1.1 Il trattamento dei Suoi dati personali sarà principalmente effettuato con l'ausilio di mezzi elettronici
+            o comunque automatizzati, secondo le modalità e con gli strumenti idonei a garantirne la sicurezza e la
+            riservatezza in conformità al GDPR.</li>
+          <li>1.2 Le informazioni acquisite e le modalità del trattamento saranno pertinenti e non eccedenti rispetto alla
+            tipologia dei servizi resi. I Suoi dati saranno altresì gestiti e protetti in ambienti informatici sicuri e
+            adeguati alle circostanze.</li>
+          <li>1.3 Tramite il Sito non vengono trattati "dati particolari". I dati particolari sono quelli che possono
+            rivelare l'origine razziale ed etnica, le convinzioni religiose, filosofiche o di altro genere, le opinioni
+            politiche, l'adesione a partiti, sindacati, associazioni od organizzazioni a carattere religioso, filosofico,
+            politico o sindacale, lo stato di salute e la vita sessuale.</li>
+          <li>1.4 Tramite il Sito non vengono trattati dati giudiziari.</li>
+        </ul>
+
+        <h4>Art. 2 Comunicazione dei dati personali</h4>
+        <p>
+          Il Titolare del Trattamento può comunicare i Suoi dati personali a categorie determinate di soggetti. Di
+          seguito vengono indicati i soggetti ai quali il Titolare del Trattamento si riserva di comunicare i Suoi dati:
+        </p>
+        <ul>
+          <li>Il Titolare del Trattamento può comunicare i Suoi dati personali a tutti quei soggetti (ivi incluse le
+            Pubbliche Autorità) che hanno accesso ai dati personali in forza di provvedimenti normativi o amministrativi.</li>
+          <li>I Suoi dati personali possono essere comunicati anche a tutti quei soggetti pubblici e/o privati, persone
+            fisiche e/o giuridiche (studi di consulenza legale, amministrativa e fiscale, Uffici Giudiziari, Camere di
+            Commercio, Camere ed Uffici del Lavoro, ecc.), qualora la comunicazione risulti necessaria o funzionale al
+            corretto adempimento degli obblighi derivanti dalla legge.</li>
+          <li>Nella propria ordinaria attività di gestione del Sito, il Titolare del Trattamento si avvale di società,
+            consulenti o professionisti incaricati dell'installazione, della manutenzione, dell'aggiornamento e, in
+            generale, della gestione degli hardware e software del Titolare del Trattamento o di cui quest'ultimo si
+            serve per l'erogazione dei propri servizi. Pertanto, solo con riferimento a queste finalità, i Suoi dati
+            potranno essere trattati anche da questi soggetti.</li>
+          <li>Il Titolare del Trattamento si avvale di dipendenti e/o collaboratori a qualsiasi titolo. Per il corretto
+            funzionamento del Sito il Titolare del Trattamento può comunicare i Suoi dati personali a questi dipendenti
+            e/o collaboratori.</li>
+          <li>Per l'invio delle proprie comunicazioni il Titolare del Trattamento si avvale di società esterne incaricate
+            dell'invio di questo tipo di comunicazioni (piattaforme CRM). I Suoi dati personali (in particolare l'email)
+            potranno quindi essere comunicati a queste società.</li>
+        </ul>
+        <p>
+          Il Titolare si riserva la facoltà di modificare il sopra indicato elenco in base alla propria ordinaria
+          operatività. Pertanto, Lei è invitato ad accedere con regolarità alla presente informativa per controllare a
+          quali soggetti il Titolare del Trattamento comunica i Suoi dati personali.
+        </p>
+
+        <h4>Art. 3 Conservazione dei dati personali</h4>
+        <p>3.1 Il presente articolo descrive per quanto tempo il Titolare del Trattamento si riserva il diritto di conservare i Suoi dati personali:</p>
+        <ul>
+          <li>I Suoi dati personali saranno conservati per il solo tempo necessario a garantire la corretta prestazione
+            dei servizi offerti tramite il Sito.</li>
+          <li>Per finalità di marketing, i dati personali saranno conservati fino alla eventuale revoca del consenso. Per
+            gli utenti inattivi, i dati personali verranno cancellati dopo un anno dall'invio dell'ultima email
+            eventualmente visionata.</li>
+          <li>Per finalità di customer care, i dati verranno cancellati una volta completato il servizio di assistenza.</li>
+          <li>Come previsto dall'articolo 2220 del codice civile, le fatture, così come tutte le scritture contabili in
+            generale, vengono conservate per un periodo minimo di dieci anni dalla data di registrazione, così da poter
+            essere presentate in caso di controllo.</li>
+        </ul>
+        <p>
+          3.2 Fermo quanto previsto all'articolo 3.1, il Titolare del Trattamento può conservare i Suoi dati personali
+          per il tempo richiesto da normative specifiche, come di volta in volta modificate.
+        </p>
+
+        <h4>Art. 4 Trasferimento dei dati personali</h4>
+        <p>
+          4.1 Il Titolare del Trattamento ha sede all'interno dell'Unione europea. Pertanto, il trattamento dei Suoi dati
+          è sicuro dal punto di vista normativo in quanto disciplinato dal GDPR. Qualora il trasferimento dei Suoi dati
+          personali avvenga in un Paese extra-UE e per il quale la Commissione europea ha espresso un giudizio di
+          adeguatezza, il trasferimento si ritiene in ogni caso sicuro dal punto di vista normativo. Il presente
+          articolo 4.1 indica di volta in volta i Paesi nei quali i Suoi dati personali possono essere eventualmente
+          trasferiti e dove la Commissione europea ha espresso un giudizio di adeguatezza.
+        </p>
+        <ul>
+          <li>Il Titolare del Trattamento può trasferire i Suoi dati personali nel Regno Unito. La Commissione europea ha
+            infatti statuito, con la decisione del 28 giugno 2021, che il Regno Unito offre un livello di protezione dei
+            dati personali adeguato in base a quanto stabilito dal GDPR.</li>
+        </ul>
+        <p>
+          4.2 Fermo quanto indicato all'articolo 4.1, i Suoi dati possono essere trasferiti anche in Paesi extra-UE e per
+          i quali la Commissione europea non ha espresso un giudizio di adeguatezza. Lei è pertanto invitato a visionare
+          con regolarità il presente articolo 4.2 per appurare in quali di questi Paesi i Suoi dati sono eventualmente
+          trasferiti.
+        </p>
+
+        <h4>Art. 5 Diritti dell'interessato</h4>
+        <p>Ai sensi dell'art. 13 del Regolamento Privacy, il Titolare del Trattamento La informa che Lei ha diritto di:</p>
+        <ul>
+          <li>revocare il consenso in ogni momento. L'Utente può revocare il consenso al trattamento dei propri Dati
+            Personali precedentemente espresso.</li>
+          <li>ottenere la cancellazione o rimozione dei propri Dati Personali. Quando ricorrono determinate condizioni,
+            l'Utente può richiedere la cancellazione dei propri Dati da parte del Titolare.</li>
+          <li>accedere ai propri Dati. L'Utente ha diritto ad ottenere informazioni sui Dati trattati dal Titolare, su
+            determinati aspetti del trattamento ed a ricevere una copia dei Dati trattati.</li>
+          <li>verificare e chiedere la rettificazione. L'Utente può verificare la correttezza dei propri Dati e
+            richiederne l'aggiornamento o la correzione.</li>
+          <li>ottenere la limitazione del trattamento. Quando ricorrono determinate condizioni, l'Utente può richiedere
+            la limitazione del trattamento dei propri Dati. In tal caso il Titolare non tratterà i Dati per alcun altro
+            scopo se non la loro conservazione.</li>
+          <li>ricevere i propri Dati o farli trasferire ad altro titolare. L'Utente ha diritto di ricevere i propri Dati
+            in formato strutturato, di uso comune e leggibile da dispositivo automatico e, ove tecnicamente fattibile,
+            di ottenerne il trasferimento senza ostacoli ad un altro titolare. Questa disposizione è applicabile quando
+            i Dati sono trattati con strumenti automatizzati ed il trattamento è basato sul consenso dell'Utente, su un
+            contratto di cui l'Utente è parte o su misure contrattuali ad esso connesse.</li>
+          <li>proporre reclamo. L'Utente può proporre un reclamo all'autorità di controllo della protezione dei dati
+            personali competente o agire in sede giudiziale.</li>
+        </ul>
+        <p>I diritti di cui sopra potranno essere esercitati con richiesta rivolta senza formalità ai contatti indicati in Premessa.</p>
+
+        <h4>Art. 6 Modifiche e variazioni a questa privacy policy</h4>
+        <p>
+          Il Titolare del Trattamento si riserva il diritto di apportare modifiche alla presente informativa in qualsiasi
+          momento, dandone idonea pubblicità agli utenti del Sito e garantendo in ogni caso una adeguata ed analoga
+          protezione dei dati personali. Si prega dunque di consultare con frequenza questa pagina, facendo riferimento
+          alla data di ultima modifica indicata in testata.
+        </p>
+        <p>
+          Qualora le modifiche interessino trattamenti la cui base giuridica è il consenso, il Titolare provvederà a
+          raccogliere nuovamente il consenso dell'Utente, se necessario.
+        </p>
+      </div>
+    </details>
   </section>
 
   <footer>
-    © <span id="year"></span> Groove SRL · <a href="mailto:commerciale@groovesrl.com">commerciale@groovesrl.com</a>
+    <div>2025 © Groove Srl | Via Giordano Bruno 118 Cesena (FC) | P. IVA: 04578020408</div>
+    <div><a href="tel:+390547179500">0547 179 500</a> · <a href="mailto:info@groovesrl.com">info@groovesrl.com</a></div>
+    <nav>
+      <a href="https://groovesrl.com/privacy_policy/" target="_blank" rel="noopener">Privacy Policy</a>
+      <a href="https://groovesrl.com/cookie_policy/" target="_blank" rel="noopener">Cookie Policy</a>
+    </nav>
   </footer>
 </main>
 
@@ -223,11 +485,11 @@
   // su Netlify: Site configuration → Notifications → Emails and webhooks → Form submission notifications.
   const RECIPIENT = "commerciale@groovesrl.com";
 
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  // Precompila il codice ticket/evento da ?src=... (es. ?src=FIERA-MILANO-2026)
-  const src = new URLSearchParams(location.search).get("src");
-  if (src) document.getElementById("codice").value = src.slice(0, 60);
+  // Il link all'informativa nel modulo apre la sezione privacy
+  const privacy = document.getElementById("informativa");
+  document.querySelectorAll("[data-open-privacy]").forEach((a) =>
+    a.addEventListener("click", () => { privacy.open = true; })
+  );
 
   const form = document.getElementById("scanForm");
   const btn = document.getElementById("submitBtn");
@@ -245,7 +507,7 @@
       return;
     }
     form.elements["subject"].value = "Nuova richiesta scansione di rete – " +
-      form.elements["Nome"].value + " " + form.elements["Cognome"].value;
+      form.elements["Azienda"].value + " (" + form.elements["Nome"].value + " " + form.elements["Cognome"].value + ")";
     form.elements["Inviato il"].value = new Date().toLocaleString("it-IT");
 
     btn.disabled = true;

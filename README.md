@@ -11,6 +11,7 @@ Pagina di benvenuto raggiungibile tramite QR code stampato sui ticket: spiega la
 | Percorso | Cosa contiene |
 |---|---|
 | `public/` | **Il sito pubblicato** (solo questa cartella va online) |
+| `public/assets/` | Logo Groove (versione per sfondo scuro) e font Montserrat, ospitati sul sito |
 | `public/_headers` | Header di sicurezza per Netlify e Cloudflare Pages |
 | `vercel.json` | Configurazione Vercel (cartella `public`, header di sicurezza) |
 | `netlify.toml` | Configurazione Netlify |
@@ -67,10 +68,9 @@ Il resto del dominio (sito principale, email) non viene toccato.
 Il QR è statico e non scade: contiene solo `https://chipper-puffpuff-1bfd9f.netlify.app/`. Funziona finché il sito Netlify esiste con questo nome: non eliminare né rinominare il sito su Netlify, altrimenti i ticket stampati smettono di funzionare.
 Per ticket indipendenti dall'host, collegare un sottodominio (es. `scansione.groovesrl.com`) e rigenerare il QR con quello.
 
-Per rigenerarlo, anche con un codice evento che precompila il campo "Codice ticket":
+Per rigenerarlo:
 
 ```
 pip install qrcode pillow
 python qr/genera_qr.py https://chipper-puffpuff-1bfd9f.netlify.app/
-python qr/genera_qr.py "https://chipper-puffpuff-1bfd9f.netlify.app/?src=FIERA-MILANO-2026"
 ```
